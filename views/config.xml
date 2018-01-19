@@ -1,0 +1,43 @@
+<openerp>
+    <data>
+        <record id="onlyoffice_api_configuration_view" model="ir.ui.view">
+            <field name="name">onlyoffice_api_configuration_view</field>
+            <field name="model">onlyoffice.config.api</field>
+            <field name="arch" type="xml">
+                <form string="API Configuration Onlyoffice" class="oe_form_configuration">
+                    <header>
+                        <button string="Save" type="object"
+                            name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object"
+                            name="cancel" class="oe_link"/>
+                            <button string="Get API Token" type="object"
+                            name="getApiToken" class="oe_link"/>
+                    </header>
+                    <group string="Configuration">
+                        <group name="left">
+                            <field name="url" />
+                            <field name="user" />
+                        </group>
+                        <group name="right">
+                            <field name="api_key" />
+                            <field name="password" password="True"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="onlyoffice_api_configuration_action" model="ir.actions.act_window">
+            <field name="name">OnlyOffice API Configuration</field>
+            <field name="res_model">onlyoffice.config.api</field>
+            <field name="view_id" ref="onlyoffice_api_configuration_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem id="onlyoffice_api_configuration_menu" name="OnlyOffice API"
+            parent="base.menu_config" action="onlyoffice_api_configuration_action"/>
+
+    </data>
+</openerp>

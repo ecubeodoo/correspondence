@@ -1,0 +1,771 @@
+<openerp>
+    <data>
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="correspondence_form_view" model="ir.ui.view">
+                    <field name="name">correspondence_form_view</field>
+                    <field name="model">correspondence.correspondence</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Correspondence">
+                            <header>
+                                <field name="stages" widget="statusbar" clickable="True"/>
+                            </header>
+                            <sheet>
+                                <field name="vv" invisible="True"/>
+                                <group name="group_top">
+                                    <group name="group_left" string="Client Info">                               
+                                        <field name="client_name"/>
+                                        <field name="section_no" string="Under Section"/>
+                                        <field name="section_des"/>
+                                        <field name="ao_designation"/>
+                                        <field name="ntn_no"/>
+                                        <field name="strn_no"/>
+                                        <field name="client_contact_name"/>
+                                        <field name="client_contact_number"/>
+                                        <field name="client_contact_email"/>
+                                        <field name="prt_no"/>
+                                        <field name="ito_name"/>
+                                        <field name="ito_contact_no"/>
+                                        <field name="vv" invisible='True'/>
+                                    </group>
+                                    <group name="group_right" string="Tax Authority Info">
+                                        <field name="acc_officer" />
+                                        <field name="assessing_authority" string="Tax Authority"/>
+                                        <field name="date_of_notice"/>
+                                        <field name="notice_no"/>
+                                        <field name="ao_zone"/>
+                                        <field name="ao_unit"/>
+                                        <field name="rto"/>
+                                        <field name="demand_amount"/>
+                                        <field name="type_of" string="Category"/>
+                                        <field name="stage_name" invisible="True"/>
+                                        <field name="assigned_to"/>
+                                        <field name="tax_year"/>
+                                    </group>
+                                </group>
+                                 <notebook>
+                                    <page string="Correspondence History">
+                                        <field name="corres_his" >
+                                            <tree editable="bottom">
+                                                <field name="hearing_date" />
+                                                <field name="atendee_name" string="Sub Assigned to"/>
+                                                <field name="x_type" invisible="True"/>
+                                                <field name="nex_hear_dat" />
+                                                <field name="demand_due_dat"/>
+                                                <field name="demand_us_dat"/>
+                                                <field name="attachment"/>
+                                                <field name="acc_officer"/>
+                                                <field name="cor_file_type"/>
+                                                <field name="client_name" invisible="True"/>
+                                                <field name="section_no" invisible="True"/>
+                                                <field name="notice_no" invisible="True"/>
+                                                <field name="assigned_to" invisible="True"/>
+                                                <field name="tax_year" invisible="True"/>
+                                                <field name="type_of" invisible="True"/>
+                                                <field name="hearing_date_str" invisible="True"/>
+                                                <field name="internal_file_no"/>
+                                                <field name="remarks"/>
+                                                <field name="attachment_file"/>
+                                                <field name="status"/>
+                                                <button name="changeStatus" string="Done" type="object"  class="oe_highlight" attrs="{'invisible': [('status','=','Done')]}"/>
+                                                <field name="done_date" invisible="True"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        <!-- Mail foram-START -->
+                            <div class="oe_chatter">
+                                <field name="message_follower_ids" widget="mail_followers"/>
+                                <field name="message_ids" widget="mail_thread"/>
+                            </div>
+                        <!-- Mail foram-ENDS -->
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                    <record id="correspondence_tree_view" model="ir.ui.view">
+                        <field name="name">correspondence_tree_view</field>
+                        <field name="model">correspondence.correspondence</field>
+                        <field name="type">tree</field>
+                        <field name="arch" type="xml">
+                            <tree string="Correspondence">
+                                <field name="client_name"/>
+                                <field name="section_no"/>
+                                <field name="section_des"/>
+                                <field name="acc_officer"/>
+                                <field name="date_of_notice"/>
+                                <field name="notice_no"/>
+                                <field name="demand_amount"/>
+                                <field name="assigned_to"/>
+                            </tree>
+                        </field>
+                    </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_correspondence">
+                    <field name="name">Correspondence</field>
+                    <field name="res_model">correspondence.correspondence</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Correspondence" id="correspondence"  sequence="0"/>.
+                <menuitem name="Correspondence" id="correspondence_child" parent="correspondence"  sequence="0"/>
+                <menuitem name="Correspondence" id="correspondence_child_child" parent="correspondence_child" action="action_correspondence" sequence="1"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Assessment Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="assessment_form_view" model="ir.ui.view">
+                    <field name="name">assessment_form_view</field>
+                    <field name="model">assessment.corres</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Assessment">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                        <field name="client_name"/>
+                                        <field name="section_no"/>
+                                        <field name="section_des"/>
+                                        <field name="acc_officer"/>
+                                        <field name="date_of_notice"/>
+                                        <field name="notice_no"/>
+                                        <field name="vv" invisible ='True'/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="assessing_authority"/>
+                                        <field name="rto"/>
+                                        <field name="demand_amount"/>
+                                        <field name="assigned_to"/>
+                                        <field name="tax_year"/>
+                                    </group>
+                                </group>
+                                 <notebook>
+                                    <page string="Assessment History">
+                                        <field name="corres_his">
+                                            <tree editable="bottom">
+                                                <field name="hearing_date"/>
+                                                <field name="atendee_name"/>
+                                                <field name="x_type"/>
+                                                <field name="nex_hear_dat"/>
+                                                <field name="remarks"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                    <record id="assessment_tree_view" model="ir.ui.view">
+                        <field name="name">assessment_tree_view</field>
+                        <field name="model">assessment.corres</field>
+                        <field name="type">tree</field>
+                        <field name="arch" type="xml">
+                            <tree string="Assessment">
+                                <field name="client_name"/>
+                                <field name="section_no"/>
+                                <field name="section_des"/>
+                                <field name="acc_officer"/>
+                                <field name="date_of_notice"/>
+                                <field name="notice_no"/>
+                                <field name="demand_amount"/>
+                                <field name="assigned_to"/>
+                            </tree>
+                        </field>
+                    </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_assessment_corres">
+                    <field name="name">Assessment</field>
+                    <field name="res_model">assessment.corres</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Assessment" id="assessment_child_child" parent="correspondence_child" action="action_assessment_corres" sequence="1"/>
+            <!--************************[Menu-ENDS]***************************-->
+                                <!-- Assessment Ends -->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Audit Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="audit_form_view" model="ir.ui.view">
+                    <field name="name">audit_form_view</field>
+                    <field name="model">audit.corres</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Audit">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                        <field name="client_name"/>
+                                        <field name="section_no"/>
+                                        <field name="section_des"/>
+                                        <field name="acc_officer"/>
+                                        <field name="date_of_notice"/>
+                                        <field name="notice_no"/>
+                                        <field name="vv" invisible ='True'/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="assessing_authority"/>
+                                        <field name="rto"/>
+                                        <field name="demand_amount"/>
+                                        <field name="assigned_to"/>
+                                        <field name="tax_year"/>
+                                    </group>
+                                </group>
+                                 <notebook>
+                                    <page string="Audit History">
+                                        <field name="corres_his">
+                                            <tree editable="bottom">
+                                                <field name="hearing_date"/>
+                                                <field name="atendee_name"/>
+                                                <field name="x_type"/>
+                                                <field name="nex_hear_dat"/>
+                                                <field name="remarks"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                    <record id="audit_tree_view" model="ir.ui.view">
+                        <field name="name">audit_tree_view</field>
+                        <field name="model">audit.corres</field>
+                        <field name="type">tree</field>
+                        <field name="arch" type="xml">
+                            <tree string="Audit">
+                                <field name="client_name"/>
+                                <field name="section_no"/>
+                                <field name="section_des"/>
+                                <field name="acc_officer"/>
+                                <field name="date_of_notice"/>
+                                <field name="notice_no"/>
+                                <field name="demand_amount"/>
+                                <field name="assigned_to"/>
+                            </tree>
+                        </field>
+                    </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_audit_corres">
+                    <field name="name">Audit</field>
+                    <field name="res_model">audit.corres</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Audit" id="audit_child_child" parent="correspondence_child" action="action_audit_corres" sequence="1"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Audit Ends%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Rectification Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="rectification_form_view" model="ir.ui.view">
+                    <field name="name">rectification_form_view</field>
+                    <field name="model">rectification.corres</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Rectification">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                        <field name="client_name"/>
+                                        <field name="section_no"/>
+                                        <field name="section_des"/>
+                                        <field name="acc_officer"/>
+                                        <field name="date_of_notice"/>
+                                        <field name="notice_no"/>
+                                        <field name="vv" invisible ='True'/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="assessing_authority"/>
+                                        <field name="rto"/>
+                                        <field name="demand_amount"/>
+                                        <field name="assigned_to"/>
+                                        <field name="tax_year"/>
+                                    </group>
+                                </group>
+                                 <notebook>
+                                    <page string="Rectification History">
+                                        <field name="corres_his">
+                                            <tree editable="bottom">
+                                                <field name="hearing_date"/>
+                                                <field name="atendee_name"/>
+                                                <field name="x_type"/>
+                                                <field name="nex_hear_dat"/>
+                                                <field name="remarks"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                    <record id="rectification_tree_view" model="ir.ui.view">
+                        <field name="name">rectification_tree_view</field>
+                        <field name="model">rectification.corres</field>
+                        <field name="type">tree</field>
+                        <field name="arch" type="xml">
+                            <tree string="Rectification">
+                                <field name="client_name"/>
+                                <field name="section_no"/>
+                                <field name="section_des"/>
+                                <field name="acc_officer"/>
+                                <field name="date_of_notice"/>
+                                <field name="notice_no"/>
+                                <field name="demand_amount"/>
+                                <field name="assigned_to"/>
+                            </tree>
+                        </field>
+                    </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_rectification">
+                    <field name="name">Rectification</field>
+                    <field name="res_model">rectification.corres</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Rectification" id="rectification_child_child" parent="correspondence_child" action="action_rectification" sequence="1"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Rectification Ends%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Recovery Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="recovery_form_view" model="ir.ui.view">
+                    <field name="name">recovery_form_view</field>
+                    <field name="model">recovery.corres</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Recovery">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                        <field name="client_name"/>
+                                        <field name="section_no"/>
+                                        <field name="section_des"/>
+                                        <field name="acc_officer"/>
+                                        <field name="date_of_notice"/>
+                                        <field name="notice_no"/>
+                                        <field name="vv" invisible ='True'/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="assessing_authority"/>
+                                        <field name="rto"/>
+                                        <field name="demand_amount"/>
+                                        <field name="assigned_to"/>
+                                        <field name="tax_year"/>
+                                    </group>
+                                </group>
+                                 <notebook>
+                                    <page string="Recovery History">
+                                        <field name="corres_his">
+                                            <tree editable="bottom">
+                                                <field name="hearing_date"/>
+                                                <field name="atendee_name"/>
+                                                <field name="x_type"/>
+                                                <field name="nex_hear_dat"/>
+                                                <field name="remarks"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                    <record id="recovery_tree_view" model="ir.ui.view">
+                        <field name="name">recovery_tree_view</field>
+                        <field name="model">recovery.corres</field>
+                        <field name="type">tree</field>
+                        <field name="arch" type="xml">
+                            <tree string="Recovery">
+                                <field name="client_name"/>
+                                <field name="section_no"/>
+                                <field name="section_des"/>
+                                <field name="acc_officer"/>
+                                <field name="date_of_notice"/>
+                                <field name="notice_no"/>
+                                <field name="demand_amount"/>
+                                <field name="assigned_to"/>
+                            </tree>
+                        </field>
+                    </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_recovery">
+                    <field name="name">Recovery</field>
+                    <field name="res_model">recovery.corres</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Recovery" id="recovery_child_child" parent="correspondence_child" action="action_recovery" sequence="1"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Recovery Ends%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence History%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="correspondence_history_form_view" model="ir.ui.view">
+                    <field name="name">correspondence_history_form_view</field>
+                    <field name="model">correspondence.history</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Correspondence History">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                        <field name="hearing_date"/>
+                                        <field name="atendee_name"/>
+                                        <field name="x_type"/>
+                                        <field name="section_no"/>
+                                        <field name="notice_no"/>
+                                        <field name="assigned_to"/>
+                                        <field name="attachment"/>
+                                        <field name="acc_officer"/>
+                                        <field name="status"/>
+                                        <field name="hearing_date_now" invisible="True"/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="nex_hear_dat"/>
+                                        <field name="remarks"/>
+                                        <field name="correspondence_his" readonly='1'/>
+                                        <field name="tax_year"/>
+                                        <field name="type_of"/>
+                                        <field name="internal_file_no"/>
+                                        <field name="attachment_file"/>
+                                        <field name="cor_file_type"/>
+                                        <field name="done_date" invisible="True"/>
+                                        <field name="today_date_curr" invisible="True"/>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                <record id="correspondence_history_tree_view" model="ir.ui.view">
+                    <field name="name">correspondence_history_tree_view</field>
+                    <field name="model">correspondence.history</field>
+                    <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Correspondence">
+                            <field name="correspondence_his"/>
+                            <field name="hearing_date_str"/>
+                            <field name="atendee_name"/>
+                            <field name="x_type"/>
+                            <field name="nex_hear_dat"/>
+                            <field name="remarks"/>
+                            <field name="section_no"/>
+                            <field name="notice_no"/>
+                            <field name="assigned_to"/>
+                            <field name="tax_year"/>
+                            <field name="type_of"/>
+                            <field name="attachment"/>
+                            <field name="acc_officer"/>
+                            <field name="cor_file_type"/>
+                            <field name="status"/>
+                        </tree>
+                    </field>
+                </record>
+            <!--************************[Tree View-ENDS]**********************-->
+            <!--========================[Search View-START]=====================-->
+
+                <record id="correspondence_history_search_view" model="ir.ui.view">
+                    <field name="name">correspondence_history_search_view</field>
+                    <field name="model">correspondence.history</field>
+                    <field name="arch" type="xml">
+                        <search string="Search History">
+                           <filter string="Accessing Officer" name="acc_officer" domain="[('acc_officer','=',1)]"/>
+                           <filter string="Attendee Name" name="atendee_name" domain="[('atendee_name','=',1)]"/>
+                           <filter string="Assigned To" name="assigned_to" domain="[('assigned_to','=',1)]"/>
+                           <filter string="Today" name="today" domain="[('hearing_date','=',current_date)]" />
+
+                           <filter string="Tomorrow" name="tomorrow" domain="[('hearing_date','=',(context_today()+relativedelta(days=1)).strftime('%%Y-%m-%d'))]" />
+                           <filter string="Next Week" name="next_week" domain="[('hearing_date','&gt;=',(context_today()+relativedelta(days=7)).strftime('%%Y-%m-%d')),('hearing_date','&lt;=',(context_today()+relativedelta(days=-7)).strftime('%%Y-%m-%d'))]"/>
+                           <filter string="This Week" name="this_week" domain="[('hearing_date','&lt;=',(context_today()+relativedelta(days=7)).strftime('%%Y-%m-%d')),('hearing_date','&gt;=',(context_today()+relativedelta(days=-7)).strftime('%%Y-%m-%d'))]" />
+                           <separator/>
+                           <field name="atendee_name" string="Attendee Name"/>
+                           <field name="assigned_to" string="Assigned To"/>
+                           <field name="section_no" string="Section No"/>
+                           <field name="notice_no" string="Notice No"/>
+                           <group expand="0" string="Group By">
+                               <filter string="Tax Year" icon="terp-personal" domain="[]" context="{'group_by' : 'tax_year'}"/>
+                               <filter string="Section No" context="{'group_by': 'section_no'}"/>
+                               <filter string="Notice No" context="{'group_by': 'notice_no'}"/>
+                               <filter string="Status" context="{'group_by': 'status'}"/>
+                               <filter string="Hearing Date" context="{'group_by': 'hearing_date_str'}"/>
+                               <filter string="Accessing Officer" context="{'group_by': 'acc_officer'}"/>
+                           </group>
+                        </search>
+                    </field>
+                </record>
+            <!--************************[Search View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_correspondence_history">
+                    <field name="name">Correspondence History</field>
+                    <field name="res_model">correspondence.history</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Correspondence History" id="correspondence_child_child_2" parent="correspondence_child" action="action_correspondence_history" sequence="2"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence File Type%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="correspondencefiletype_form_view" model="ir.ui.view">
+                    <field name="name">correspondencefiletype_form_view</field>
+                    <field name="model">correspondence.file.type</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Correspondence File Type">
+                            <header>
+                                <button name="validate" type="object" string="Validate" class="oe_highlight"/>
+                                <field name="state" widget="statusbar"/>
+                            </header>
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                        <field name="assessing_officer"  attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                        <field name="notice_no" attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                        <field name="subject" attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                        <field name="detail" attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                        <button name="createFile" type="object" string="Create File" class="oe_highlight" attrs="{'invisible': [('mylink','!=','http://')]}"/>
+                                        <button name="openFile" type="object" string="Open File" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
+                                        <field name="mylink" invisible="1"/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="customer_name" attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                        <field name="date" attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                    </group>
+                                </group>
+                                <field name="description" attrs="{'readonly': [('state','=',('validate'))]}" widget="text_ckeditor4"/>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                <record id="correspondencefiletype_tree_view" model="ir.ui.view">
+                    <field name="name">correspondencefiletype_tree_view</field>
+                    <field name="model">correspondence.file.type</field>
+                    <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Correspondence File Type">
+                            <field name="date"/>
+                            <field name="assessing_officer"/>
+                            <field name="notice_no"/>
+                            <field name="description" widget="text_ckeditor4"/>
+                        </tree>
+                    </field>
+                </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_correspondencefiletype">
+                    <field name="name">Correspondence File Type</field>
+                    <field name="res_model">correspondence.file.type</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Letter" id="correspondencefiletype_child_child_2" parent="correspondence_child" action="action_correspondencefiletype" sequence="6"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence Attachment%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="correspondenceattachment_form_view" model="ir.ui.view">
+                    <field name="name">correspondenceattachment_form_view</field>
+                    <field name="model">correspondence.attachment</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Correspondence Attachment">
+                            <header>
+                            </header>
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">                               
+                                    </group>
+                                    <group name="group_right">
+                                    </group>
+                                </group>
+                                <field name="attachment_tree_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="attachment"/>
+                                    </tree>
+                                </field>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence Attachment ENDS%%%%%%%%%%%%%%%%%%%% -->
+
+
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence Stages%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="correspondencestages_form_view" model="ir.ui.view">
+                    <field name="name">correspondencestages_form_view</field>
+                    <field name="model">correspondence.stage</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Correspondence Stages">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">
+                                        <field name="name"/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="sequence" widget="handle" />
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                <record id="correspondencestages_tree_view" model="ir.ui.view">
+                    <field name="name">correspondencestages_tree_view</field>
+                    <field name="model">correspondence.stage</field>
+                    <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Correspondence Stages">
+                            <field name="sequence" widget="handle" />
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </record>
+            <!--************************[Tree View-ENDS]**********************-->
+
+            <!--========================[Action-START]========================-->
+                <record model="ir.actions.act_window" id="action_correspondencestages">
+                    <field name="name">Correspondence Stages</field>
+                    <field name="res_model">correspondence.stage</field>
+                    <field name="view_type">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+            <!--************************[Action-ENDS]*************************-->
+
+            <!--========================[Menu-START]==========================-->
+                <menuitem name="Stages" id="correspondencestages_child_child_2" parent="correspondence_child" action="action_correspondencestages" sequence="6"/>
+            <!--************************[Menu-ENDS]***************************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+
+
+
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence Accessing Officer%%%%%%%%%%%%%%%%%%%% -->
+            <!--========================[Form View-START]=====================-->
+                <record id="correspondenceacc_officer_form_view" model="ir.ui.view">
+                    <field name="name">correspondenceacc_officer_form_view</field>
+                    <field name="model">corres.acc.officer</field>
+                    <field name="type">form</field>
+                    <field name="arch" type="xml">
+                        <form string="Accessing Officer">
+                            <sheet>
+                                <group name="group_top">
+                                    <group name="group_left">
+                                        <field name="name"/>
+                                        <field name="ao_zone"/>
+                                        <field name="ao_unit"/>
+                                    </group>
+                                    <group name="group_right">
+                                        <field name="ao_designation" />
+                                        <field name="rto"  />
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            <!--************************[Form View-ENDS]**********************-->
+
+            <!--========================[Tree View-START]=====================-->
+
+                <record id="correspondenceacc_officer_tree_view" model="ir.ui.view">
+                    <field name="name">correspondenceacc_officer_tree_view</field>
+                    <field name="model">corres.acc.officer</field>
+                    <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Accessing Officer">
+                            <field name="name"/>
+                            <field name="ao_zone"/>
+                            <field name="ao_unit"/>
+                            <field name="ao_designation" />
+                            <field name="rto"  />
+                        </tree>
+                    </field>
+                </record>
+            <!--************************[Tree View-ENDS]**********************-->
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+
+
+    </data>
+</openerp>
