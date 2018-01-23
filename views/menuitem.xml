@@ -1,0 +1,29 @@
+<openerp>
+    <data>
+                <!-- Correspondence  -->
+                <menuitem name="Correspondence" id="correspondence"  sequence="0"/>.
+                <menuitem name="Correspondence" id="correspondence_child" parent="correspondence"  sequence="0"/>
+                <menuitem name="Correspondence" id="correspondence_child_child" parent="correspondence_child" action="action_correspondence" sequence="1"/>
+
+               <!--  <menuitem name="Assessment" id="assessment_child_child" parent="correspondence_child" action="action_assessment_corres" sequence="1"/> -->
+
+               <!--  <menuitem name="Audit" id="audit_child_child" parent="correspondence_child" action="action_audit_corres" sequence="1"/> -->
+
+                <!-- <menuitem name="Rectification" id="rectification_child_child" parent="correspondence_child" action="action_rectification" sequence="1"/> -->
+
+                <!-- <menuitem name="Recovery" id="recovery_child_child" parent="correspondence_child" action="action_recovery" sequence="1" /> -->
+
+                <menuitem name="Correspondence History" id="correspondence_child_child_2" parent="correspondence_child" action="action_correspondence_history" sequence="2"/>
+
+                <menuitem name="Letter" id="correspondencefiletype_child_child_2" parent="correspondence_child" action="action_correspondencefiletype" sequence="6"/>
+
+
+                <!-- Configurtion -->
+                <menuitem name="Configurtion" id="configurtion_child" parent="correspondence"  sequence="1"/>
+                <menuitem name="Stages" id="configstages_child_child_2" parent="configurtion_child" action="action_correspondencestages" sequence="6"/>
+
+                <!-- Menu Items For Configuration File -->
+                <menuitem id="onlyoffice_api_configuration_menu" name="OnlyOffice API"
+                    parent="base.menu_config" action="onlyoffice_api_configuration_action"/>
+    </data>
+</openerp>

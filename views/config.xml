@@ -37,8 +37,7 @@
             <field name="target">inline</field>
         </record>
 
-        <menuitem id="onlyoffice_api_configuration_menu" name="OnlyOffice API"
-            parent="base.menu_config" action="onlyoffice_api_configuration_action"/>
+
 
     </data>
 </openerp>

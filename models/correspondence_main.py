@@ -142,7 +142,7 @@ class AssessmentCorres(models.Model):
 	# Fields declaration
 	vv = fields.Char(compute="_compute_rec")
 	# compute and search fields, in the same order of fields declaration
-	@api.multi
+	@api.one
 	def _compute_rec(self):
 		self.vv = '(%s) Notice No %s u/s %s for Tax Year %s' %(self.client_name.name,self.notice_no,self.section_no ,self.tax_year)
 	_rec_name = 'vv'
@@ -156,7 +156,7 @@ class AuditCorres(models.Model):
 	# Fields declaration
 	vv = fields.Char(compute="_compute_rec")
 	# compute and search fields, in the same order of fields declaration
-	@api.multi
+	@api.one
 	def _compute_rec(self):
 		self.vv = '(%s) Notice No %s u/s %s for Tax Year %s' %(self.client_name.name,self.notice_no,self.section_no ,self.tax_year)
 	_rec_name = 'vv'
@@ -170,7 +170,7 @@ class RectificationCorres(models.Model):
 	# Fields declaration
 	vv = fields.Char(compute="_compute_rec")
 	# compute and search fields, in the same order of fields declaration
-	@api.multi
+	@api.one
 	def _compute_rec(self):
 		self.vv = '(%s) Notice No %s u/s %s for Tax Year %s' %(self.client_name.name,self.notice_no,self.section_no ,self.tax_year)
 	_rec_name = 'vv'
@@ -184,7 +184,7 @@ class RecoveryCorres(models.Model):
 	# Fields declaration
 	vv = fields.Char(compute="_compute_rec")
 	# compute and search fields, in the same order of fields declaration
-	@api.multi
+	@api.one
 	def _compute_rec(self):
 		self.vv = '(%s) Notice No %s u/s %s for Tax Year %s' %(self.client_name.name,self.notice_no,self.section_no ,self.tax_year)
 	_rec_name = 'vv'
@@ -309,13 +309,13 @@ class CorrespondenceFileType(models.Model):
 	_name = 'correspondence.file.type'
 	_description = 'CorrespondenceFileType'
 	# Fields declaration
-	date = fields.Date('Date')
-	assessing_officer = fields.Many2one('corres.acc.officer','Assessing Officer')
-	notice_no = fields.Char("Notice No")
+	date = fields.Date('Date', required=True)
+	assessing_officer = fields.Many2one('corres.acc.officer','Assessing Officer', required=True)
+	notice_no = fields.Char("Notice No", required=True)
 	subject = fields.Char("Subject")
 	detail = fields.Char("Detail")
 	description      = fields.Text()
-	customer_name    = fields.Many2one('res.partner','Client')
+	customer_name    = fields.Many2one('res.partner','Client', required=True)
 	state = fields.Selection([
 		('draft','Draft'),
 		('validate','Validated'),
@@ -323,9 +323,9 @@ class CorrespondenceFileType(models.Model):
 	vv                      = fields.Char(compute="_compute_rec")
 	mylink                  = fields.Char(string="Link", default=lambda self: _('http://'))
 	# compute and search fields, in the same order of fields declaration
-	@api.multi
+	@api.one
 	def _compute_rec(self):
-		self.vv = 'Notice No %s dated %s for %s' %(self.notice_no,self.date ,self.customer_name)
+		self.vv = 'Notice No %s dated %s for %s' %(self.notice_no,self.date ,self.customer_name.name)
 	_rec_name = 'vv'
 	# Action methods
 	@api.multi

@@ -56,7 +56,7 @@
                                                 <field name="demand_us_dat"/>
                                                 <field name="attachment"/>
                                                 <field name="acc_officer"/>
-                                                <field name="cor_file_type"/>
+                                                <field name="cor_file_type" context="{'default_assessing_officer': acc_officer,'default_notice_no': parent.notice_no,'default_customer_name': parent.client_name,'default_date': hearing_date}"/>
                                                 <field name="client_name" invisible="True"/>
                                                 <field name="section_no" invisible="True"/>
                                                 <field name="notice_no" invisible="True"/>
@@ -117,11 +117,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Correspondence" id="correspondence"  sequence="0"/>.
-                <menuitem name="Correspondence" id="correspondence_child" parent="correspondence"  sequence="0"/>
-                <menuitem name="Correspondence" id="correspondence_child_child" parent="correspondence_child" action="action_correspondence" sequence="1"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Assessment Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -200,9 +195,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Assessment" id="assessment_child_child" parent="correspondence_child" action="action_assessment_corres" sequence="1"/>
-            <!--************************[Menu-ENDS]***************************-->
                                 <!-- Assessment Ends -->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
@@ -282,9 +274,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Audit" id="audit_child_child" parent="correspondence_child" action="action_audit_corres" sequence="1"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Audit Ends%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Rectification Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -363,9 +352,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Rectification" id="rectification_child_child" parent="correspondence_child" action="action_rectification" sequence="1"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Rectification Ends%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Recovery Form%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -444,9 +430,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Recovery" id="recovery_child_child" parent="correspondence_child" action="action_recovery" sequence="1"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Recovery Ends%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%Correspondence History%%%%%%%%%%%%%%%%%%%% -->
@@ -559,9 +542,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Correspondence History" id="correspondence_child_child_2" parent="correspondence_child" action="action_correspondence_history" sequence="2"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
 
@@ -586,14 +566,14 @@
                                         <field name="detail" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                         <button name="createFile" type="object" string="Create File" class="oe_highlight" attrs="{'invisible': [('mylink','!=','http://')]}"/>
                                         <button name="openFile" type="object" string="Open File" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
-                                        <field name="mylink" invisible="1"/>
+                                        <field name="mylink" invisible="0"/>
                                     </group>
                                     <group name="group_right">
                                         <field name="customer_name" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                         <field name="date" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                     </group>
                                 </group>
-                                <field name="description" attrs="{'readonly': [('state','=',('validate'))]}" widget="text_ckeditor4"/>
+                                <field name="description" attrs="{'readonly': [('state','=',('validate'))]}" />
                             </sheet>
                         </form>
                     </field>
@@ -611,7 +591,6 @@
                             <field name="date"/>
                             <field name="assessing_officer"/>
                             <field name="notice_no"/>
-                            <field name="description" widget="text_ckeditor4"/>
                         </tree>
                     </field>
                 </record>
@@ -626,9 +605,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Letter" id="correspondencefiletype_child_child_2" parent="correspondence_child" action="action_correspondencefiletype" sequence="6"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
 
@@ -712,9 +688,6 @@
                 </record>
             <!--************************[Action-ENDS]*************************-->
 
-            <!--========================[Menu-START]==========================-->
-                <menuitem name="Stages" id="correspondencestages_child_child_2" parent="correspondence_child" action="action_correspondencestages" sequence="6"/>
-            <!--************************[Menu-ENDS]***************************-->
         <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
 
