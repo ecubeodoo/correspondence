@@ -362,6 +362,7 @@ class CorrespondenceFileType(models.Model):
 	def prepareFile(self, fileType):
 		get_param = self.env['ir.config_parameter'].get_param
 		api_key = get_param('api_key', default='')
+		server_public_ip = get_param('server_public_ip', default='')
 		headers = {'content-type': 'application/json', 'Authorization': api_key}
 		ipaddress = self.get_ip_address()
 		url = 'http://'+str(ipaddress)+'/api/2.0/files/@my/file?title='+str(self.vv)+str(self.id)+str(fileType)
@@ -371,7 +372,7 @@ class CorrespondenceFileType(models.Model):
 		rawUrl = webUrl.split('http://')
 		if "/" in rawUrl[1]:
 		    param, value = rawUrl[1].split("/",1)
-		requiredUrl = 'http://'+str(ipaddress)+'/'+value
+		requiredUrl = 'http://'+str(server_public_ip)+'/'+value
 		return requiredUrl
 #Correspondence Accessing OfficerClass
 class CorrespondenceAccessingOfficer(models.Model):

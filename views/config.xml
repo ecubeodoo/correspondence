@@ -18,6 +18,7 @@
                         <group name="left">
                             <field name="url" />
                             <field name="user" />
+                            <field name="server_public_ip" />
                         </group>
                         <group name="right">
                             <field name="api_key" />

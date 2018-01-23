@@ -10,6 +10,7 @@ class OnlyOfficeConfigAPI(models.TransientModel):
 	password = fields.Char()
 	url = fields.Char()
 	api_key = fields.Char()
+	server_public_ip = fields.Char()
 
 	@api.multi
 	def set_api_user(self):
@@ -32,6 +33,12 @@ class OnlyOfficeConfigAPI(models.TransientModel):
 		self.env['ir.config_parameter'].set_param('api_key', api_key)
 
 	@api.multi
+	def set_server_public_ip(self):
+		server_public_ip = self[0].server_public_ip or ''
+		self.env['ir.config_parameter'].set_param('server_public_ip', server_public_ip)
+
+
+	@api.multi
 	def getApiToken(self):
 		headers = {'content-type': 'application/json'}
 		url = self.url
@@ -48,9 +55,11 @@ class OnlyOfficeConfigAPI(models.TransientModel):
 		password = get_param('password', default='')
 		url = get_param('url', default='')
 		api_key = get_param('api_key', default='')
+		server_public_ip = get_param('server_public_ip', default='')
 		return {
 			'user': user,
 			'password': password,
 			'url' : url,
-			'api_key' : api_key
+			'api_key' : api_key,
+			'server_public_ip':server_public_ip
 		}
