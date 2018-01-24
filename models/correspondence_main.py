@@ -322,6 +322,7 @@ class CorrespondenceFileType(models.Model):
 		],string="Stage", default="draft")
 	vv                      = fields.Char(compute="_compute_rec")
 	mylink                  = fields.Char(string="Link", default=lambda self: _('http://'))
+	internal_link           = fields.Char(string="Internal Link", default=lambda self: _('http://'))
 	# compute and search fields, in the same order of fields declaration
 	@api.one
 	def _compute_rec(self):
@@ -334,14 +335,23 @@ class CorrespondenceFileType(models.Model):
 
 	@api.multi
 	def createFile(self):
+		get_param = self.env['ir.config_parameter'].get_param
+		server_public_ip = get_param('server_public_ip', default='')
+		server_internal_ip = get_param('server_internal_ip', default='')
+
 		if self.mylink == 'http://':
-			self.mylink = self.prepareFile('.docx')
-		url = self.mylink
-		return {
-			'type': 'ir.actions.act_url',
-			'target': 'new',
-			'url': url,
-			}
+			RequriedLink= self.prepareFile('.docx')
+			self.mylink = 'http://'+str(server_public_ip)+str(RequriedLink)
+			self.internal_link = 'http://'+str(server_internal_ip)+str(RequriedLink)
+
+
+		# url = self.mylink
+
+		# return {
+		# 	'type': 'ir.actions.act_url',
+		# 	'target': 'new',
+		# 	'url': url,
+		# 	}
 
 	@api.multi
 	def openFile(self):
@@ -351,6 +361,16 @@ class CorrespondenceFileType(models.Model):
 			'target': 'new',
 			'url': url,
 			}
+
+	@api.multi
+	def openFileInternal(self):
+		url = self.internal_link
+		return {
+			'type': 'ir.actions.act_url',
+			'target': 'new',
+			'url': url,
+			}
+
 
 	def get_ip_address(self):
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -362,7 +382,6 @@ class CorrespondenceFileType(models.Model):
 	def prepareFile(self, fileType):
 		get_param = self.env['ir.config_parameter'].get_param
 		api_key = get_param('api_key', default='')
-		server_public_ip = get_param('server_public_ip', default='')
 		headers = {'content-type': 'application/json', 'Authorization': api_key}
 		ipaddress = self.get_ip_address()
 		url = 'http://'+str(ipaddress)+'/api/2.0/files/@my/file?title='+str(self.vv)+str(self.id)+str(fileType)
@@ -372,7 +391,7 @@ class CorrespondenceFileType(models.Model):
 		rawUrl = webUrl.split('http://')
 		if "/" in rawUrl[1]:
 		    param, value = rawUrl[1].split("/",1)
-		requiredUrl = 'http://'+str(server_public_ip)+'/'+value
+		requiredUrl = '/'+value
 		return requiredUrl
 #Correspondence Accessing OfficerClass
 class CorrespondenceAccessingOfficer(models.Model):

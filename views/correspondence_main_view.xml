@@ -555,6 +555,9 @@
                         <form string="Correspondence File Type">
                             <header>
                                 <button name="validate" type="object" string="Validate" class="oe_highlight"/>
+                                <button name="createFile" type="object" string="Create File" class="oe_highlight" attrs="{'invisible': [('mylink','!=','http://')]}"/>
+                                <button name="openFile" type="object" string="Open File" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
+                                <button name="openFileInternal" type="object" string="Open File Internally" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
                                 <field name="state" widget="statusbar"/>
                             </header>
                             <sheet>
@@ -564,9 +567,8 @@
                                         <field name="notice_no" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                         <field name="subject" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                         <field name="detail" attrs="{'readonly': [('state','=',('validate'))]}"/>
-                                        <button name="createFile" type="object" string="Create File" class="oe_highlight" attrs="{'invisible': [('mylink','!=','http://')]}"/>
-                                        <button name="openFile" type="object" string="Open File" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
-                                        <field name="mylink" invisible="0"/>
+                                        <field name="mylink" invisible="1"/>
+                                        <field name="internal_link" invisible="1"/>
                                     </group>
                                     <group name="group_right">
                                         <field name="customer_name" attrs="{'readonly': [('state','=',('validate'))]}"/>
