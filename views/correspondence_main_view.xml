@@ -554,10 +554,10 @@
                     <field name="arch" type="xml">
                         <form string="Correspondence File Type">
                             <header>
-                                <button name="validate" type="object" string="Validate" class="oe_highlight"/>
+                                <button name="validate" type="object" string="Validate" class="oe_highlight" attrs="{'invisible': [('state','!=','draft')]}"/>
                                 <button name="settoDraft" type="object" string="Set To Draft" class="oe_highlight" attrs="{'invisible': [('state','!=','validate')]}"/>
                                 <button name="createFile" type="object" string="Create File" class="oe_highlight" attrs="{'invisible': [('mylink','!=','http://')]}"/>
-                                <button name="openFile" type="object" string="Open File" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
+                                <button name="openFile" type="object" string="Open File Externally" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
                                 <button name="openFileInternal" type="object" string="Open File Internally" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
                                 <field name="state" widget="statusbar"/>
                             </header>
