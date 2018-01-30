@@ -337,7 +337,7 @@ class CorrespondenceFileType(models.Model):
 		ipaddress = self.get_ip_address()
 		rawFileId = self.mylink.split('=')
 		fileId = rawFileId[1]
-		data = 'share[0].ShareTo=4d957298-2e95-4f2e-ae03-14134d90f263&share[0].Access=2'
+		data = 'share[0].ShareTo=42e1e431-3bf4-4e62-a528-97a7df754fc1&share[0].Access=2'
 		url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
 		requests.put(url,data=data,headers=headers)
 		self.write({'state': 'validate'})
@@ -350,7 +350,7 @@ class CorrespondenceFileType(models.Model):
 		ipaddress = self.get_ip_address()
 		rawFileId = self.mylink.split('=')
 		fileId = rawFileId[1]
-		data = 'share[0].ShareTo=4d957298-2e95-4f2e-ae03-14134d90f263&share[0].Access=1'
+		data = 'share[0].ShareTo=42e1e431-3bf4-4e62-a528-97a7df754fc1&share[0].Access=1'
 		url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
 		requests.put(url,data=data,headers=headers)
 		self.write({'state': 'draft'})
