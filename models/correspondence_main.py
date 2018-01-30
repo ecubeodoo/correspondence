@@ -331,8 +331,29 @@ class CorrespondenceFileType(models.Model):
 	# Action methods
 	@api.multi
 	def validate(self):
+		get_param = self.env['ir.config_parameter'].get_param
+		api_key = get_param('api_key', default='')
+		headers = {'content-type': 'application/json', 'Authorization': api_key}
+		ipaddress = self.get_ip_address()
+		rawFileId = self.mylink.split('=')
+		fileId = rawFileId[1]
+		data = 'share[0].ShareTo=4d957298-2e95-4f2e-ae03-14134d90f263&share[0].Access=2'
+		url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
+		requests.put(url,data=data,headers=headers)
 		self.write({'state': 'validate'})
-
+	#Set To Draft
+	@api.multi
+	def settoDraft(self):
+		get_param = self.env['ir.config_parameter'].get_param
+		api_key = get_param('api_key', default='')
+		headers = {'content-type': 'application/json', 'Authorization': api_key}
+		ipaddress = self.get_ip_address()
+		rawFileId = self.mylink.split('=')
+		fileId = rawFileId[1]
+		data = 'share[0].ShareTo=4d957298-2e95-4f2e-ae03-14134d90f263&share[0].Access=1'
+		url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
+		requests.put(url,data=data,headers=headers)
+		self.write({'state': 'draft'})
 	@api.multi
 	def createFile(self):
 		get_param = self.env['ir.config_parameter'].get_param
