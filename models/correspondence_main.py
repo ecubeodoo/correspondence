@@ -364,6 +364,7 @@ class CorrespondenceFileType(models.Model):
 			RequriedLink= self.prepareFile('.docx')
 			self.mylink = 'http://'+str(server_public_ip)+str(RequriedLink)
 			self.internal_link = 'http://'+str(server_internal_ip)+str(RequriedLink)
+			self.settoDraft()
 
 
 		# url = self.mylink
