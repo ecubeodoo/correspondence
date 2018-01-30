@@ -333,7 +333,7 @@ class CorrespondenceFileType(models.Model):
 	def validate(self):
 		get_param = self.env['ir.config_parameter'].get_param
 		api_key = get_param('api_key', default='')
-		headers = {'content-type': 'application/json', 'Authorization': api_key}
+		headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': api_key}
 		ipaddress = self.get_ip_address()
 		rawFileId = self.mylink.split('=')
 		fileId = rawFileId[1]
@@ -346,7 +346,7 @@ class CorrespondenceFileType(models.Model):
 	def settoDraft(self):
 		get_param = self.env['ir.config_parameter'].get_param
 		api_key = get_param('api_key', default='')
-		headers = {'content-type': 'application/json', 'Authorization': api_key}
+		headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': api_key}
 		ipaddress = self.get_ip_address()
 		rawFileId = self.mylink.split('=')
 		fileId = rawFileId[1]
