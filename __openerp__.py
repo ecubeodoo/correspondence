@@ -20,6 +20,7 @@
     'data': [
         'views/correspondence_main_view.xml',
         'views/config.xml',
+        'views/res_users_view.xml',
         'views/menuitem.xml',
     ],
 }

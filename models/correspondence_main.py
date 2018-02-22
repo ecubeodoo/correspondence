@@ -316,6 +316,7 @@ class CorrespondenceFileType(models.Model):
 	detail = fields.Char("Detail")
 	description      = fields.Text()
 	customer_name    = fields.Many2one('res.partner','Client', required=True)
+	select_office_users    = fields.Many2many('res.users',string='Share File With')
 	state = fields.Selection([
 		('draft','Draft'),
 		('validate','Validated'),
@@ -329,42 +330,86 @@ class CorrespondenceFileType(models.Model):
 		self.vv = 'Notice No %s dated %s for %s' %(self.notice_no,self.date ,self.customer_name.name)
 	_rec_name = 'vv'
 	# Action methods
+
 	@api.multi
 	def validate(self):
+		for user_id in self.select_office_users:
+			if user_id.onlyoffice_user:
+				self.validateUsers(user_id.onlyoffice_user)
+	@api.multi
+	def validateUsers(self, user_id):
 		get_param = self.env['ir.config_parameter'].get_param
 		api_key = get_param('api_key', default='')
 		headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': api_key}
 		ipaddress = self.get_ip_address()
 		rawFileId = self.mylink.split('=')
 		fileId = rawFileId[1]
-		data = 'share[0].ShareTo=42e1e431-3bf4-4e62-a528-97a7df754fc1&share[0].Access=2'
+		data = 'share[0].ShareTo='+str(user_id)+'&share[0].Access=2'
 		url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
 		requests.put(url,data=data,headers=headers)
 		self.write({'state': 'validate'})
+
+	# @api.multi
+	# def validate(self):
+	# 	get_param = self.env['ir.config_parameter'].get_param
+	# 	api_key = get_param('api_key', default='')
+	# 	headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': api_key}
+	# 	ipaddress = self.get_ip_address()
+	# 	rawFileId = self.mylink.split('=')
+	# 	fileId = rawFileId[1]
+	# 	data = 'share[0].ShareTo=42e1e431-3bf4-4e62-a528-97a7df754fc1&share[0].Access=2'
+	# 	url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
+	# 	requests.put(url,data=data,headers=headers)
+	# 	self.write({'state': 'validate'})
+
+	# #Set To Draft
+	# @api.multi
+	# def settoDraft(self):
+	# 	get_param = self.env['ir.config_parameter'].get_param
+	# 	api_key = get_param('api_key', default='')
+	# 	headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': api_key}
+	# 	ipaddress = self.get_ip_address()
+	# 	rawFileId = self.mylink.split('=')
+	# 	fileId = rawFileId[1]
+	# 	data = 'share[0].ShareTo=42e1e431-3bf4-4e62-a528-97a7df754fc1&share[0].Access=1'
+	# 	url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
+	# 	requests.put(url,data=data,headers=headers)
+	# 	self.write({'state': 'draft'})
+
 	#Set To Draft
 	@api.multi
 	def settoDraft(self):
+		for user_id in self.select_office_users:
+			if user_id.onlyoffice_user:
+				self.setUsertoDraft(user_id.onlyoffice_user)
+
+	#Share file with users and set to Draft
+	@api.multi
+	def setUsertoDraft(self, user_id):
 		get_param = self.env['ir.config_parameter'].get_param
 		api_key = get_param('api_key', default='')
 		headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization': api_key}
 		ipaddress = self.get_ip_address()
 		rawFileId = self.mylink.split('=')
 		fileId = rawFileId[1]
-		data = 'share[0].ShareTo=42e1e431-3bf4-4e62-a528-97a7df754fc1&share[0].Access=1'
+		data = 'share[0].ShareTo='+str(user_id)+'&share[0].Access=1'
 		url = 'http://'+str(ipaddress)+'/api/2.0/files/file/'+str(fileId)+'/share'
 		requests.put(url,data=data,headers=headers)
 		self.write({'state': 'draft'})
+
 	@api.multi
 	def createFile(self):
 		get_param = self.env['ir.config_parameter'].get_param
 		server_public_ip = get_param('server_public_ip', default='')
 		server_internal_ip = get_param('server_internal_ip', default='')
 
-		if self.mylink == 'http://':
-			RequriedLink= self.prepareFile('.docx')
-			self.mylink = 'http://'+str(server_public_ip)+str(RequriedLink)
-			self.internal_link = 'http://'+str(server_internal_ip)+str(RequriedLink)
-			self.settoDraft()
+		# if self.mylink == 'http://':
+		RequriedLink= self.prepareFile('.docx')
+		self.mylink = 'http://'+str(server_public_ip)+str(RequriedLink)
+		self.internal_link = 'http://'+str(server_internal_ip)+str(RequriedLink)
+		for user_id in self.select_office_users:
+			if user_id.onlyoffice_user:
+				self.setUsertoDraft(user_id.onlyoffice_user)
 
 
 		# url = self.mylink

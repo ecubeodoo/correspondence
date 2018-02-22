@@ -556,7 +556,7 @@
                             <header>
                                 <button name="validate" type="object" string="Validate" class="oe_highlight" attrs="{'invisible': [('state','!=','draft')]}"/>
                                 <button name="settoDraft" type="object" string="Set To Draft" class="oe_highlight" attrs="{'invisible': [('state','!=','validate')]}"/>
-                                <button name="createFile" type="object" string="Create File" class="oe_highlight" attrs="{'invisible': [('mylink','!=','http://')]}"/>
+                                <button name="createFile" type="object" string="Create File" class="oe_highlight" />
                                 <button name="openFile" type="object" string="Open File Externally" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
                                 <button name="openFileInternal" type="object" string="Open File Internally" class="oe_highlight" attrs="{'invisible': [('mylink','=','http://')]}"/>
                                 <field name="state" widget="statusbar"/>
@@ -574,6 +574,7 @@
                                     <group name="group_right">
                                         <field name="customer_name" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                         <field name="date" attrs="{'readonly': [('state','=',('validate'))]}"/>
+                                        <field name="select_office_users" widget="many2many_tags" attrs="{'readonly': [('state','=',('validate'))]}"/>
                                     </group>
                                 </group>
                                 <field name="description" attrs="{'readonly': [('state','=',('validate'))]}" />
