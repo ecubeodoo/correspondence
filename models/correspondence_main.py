@@ -7,12 +7,14 @@ import fcntl
 import struct
 import requests
 import simplejson as json
+import re
 # import json
 # from json_encoder import json
 import simplejson
 from datetime import datetime, date
 # 2 :  imports of odoo
 from openerp import  api, fields,  models ,_
+from openerp.exceptions import ValidationError
 # 3 :  imports from odoo modules
 
 class CorresPrototype(models.Model):
@@ -331,6 +333,14 @@ class CorrespondenceFileType(models.Model):
 	_rec_name = 'vv'
 	# Action methods
 
+	@api.onchange('select_office_users')
+	def _onchange_office_users(self):
+		if self.select_office_users:
+			for user in self.select_office_users:
+				if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", str(user.email)):
+					raise ValidationError('%s email is not correct please correct before proceed.'%(user.name))
+				if not user.onlyoffice_user:
+					raise ValidationError('%s Dont have onlyoffice account please create one from setting or contact adminstrator.'%(user.name))
 	@api.multi
 	def validate(self):
 		for user_id in self.select_office_users:
@@ -399,17 +409,24 @@ class CorrespondenceFileType(models.Model):
 
 	@api.multi
 	def createFile(self):
-		get_param = self.env['ir.config_parameter'].get_param
-		server_public_ip = get_param('server_public_ip', default='')
-		server_internal_ip = get_param('server_internal_ip', default='')
+		if self.select_office_users:
+			for user in self.select_office_users:
+				if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", str(user.email)):
+					raise ValidationError('%s email is not correct please correct before proceed.'%(user.name))
+				elif not user.onlyoffice_user:
+					raise ValidationError('%s Dont have onlyoffice account please create one from setting or contact adminstrator.'%(user.name))
+				else:
+					get_param = self.env['ir.config_parameter'].get_param
+					server_public_ip = get_param('server_public_ip', default='')
+					server_internal_ip = get_param('server_internal_ip', default='')
 
-		# if self.mylink == 'http://':
-		RequriedLink= self.prepareFile('.docx')
-		self.mylink = 'http://'+str(server_public_ip)+str(RequriedLink)
-		self.internal_link = 'http://'+str(server_internal_ip)+str(RequriedLink)
-		for user_id in self.select_office_users:
-			if user_id.onlyoffice_user:
-				self.setUsertoDraft(user_id.onlyoffice_user)
+					# if self.mylink == 'http://':
+					RequriedLink= self.prepareFile('.docx')
+					self.mylink = 'http://'+str(server_public_ip)+str(RequriedLink)
+					self.internal_link = 'http://'+str(server_internal_ip)+str(RequriedLink)
+					for user_id in self.select_office_users:
+						if user_id.onlyoffice_user:
+							self.setUsertoDraft(user_id.onlyoffice_user)
 
 
 		# url = self.mylink
